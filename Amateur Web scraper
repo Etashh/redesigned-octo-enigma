@@ -1,0 +1,23 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the website to scrape
+url = 'https://commoncrawl.org/'
+
+# Send a GET request to the website
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the HTML content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find all the header elements (e.g., h1, h2, h3) to gather titles or key information
+    header_elements = soup.find_all(['h1', 'h2', 'h3'])
+
+    # Print the text from each header element
+    print("Header Texts:")
+    for element in header_elements:
+        print(element.text.strip())
+else:
+    print(f"Failed to fetch data. HTTP status code: {response.status_code}")
